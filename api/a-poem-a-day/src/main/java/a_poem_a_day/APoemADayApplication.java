@@ -1,4 +1,4 @@
-package a.poem.a.day;
+package a_poem_a_day;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
