@@ -24,7 +24,7 @@ public class PoemServiceImpl implements PoemService{
     }
 
     @Override
-    public Optional<Poem> getPoemByAuthor(String author) {
+    public Optional<List<Poem>> getPoemByAuthor(String author) {
         return poemRepository.findByAuthor(author);
     }
 

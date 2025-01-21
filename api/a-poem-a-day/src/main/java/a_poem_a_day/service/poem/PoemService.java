@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PoemService {
     Optional<Poem> getPoemById(String id);
     Optional<Poem> getPoemByTitle(String title);
-    Optional<Poem> getPoemByAuthor(String author);
+    Optional<List<Poem>> getPoemByAuthor(String author);
     Optional<List<Poem>> getRandPoems(int n);
 
 
