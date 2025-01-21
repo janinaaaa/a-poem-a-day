@@ -30,6 +30,17 @@ public class PoemServiceImpl implements PoemService{
 
     @Override
     public Optional<List<Poem>> getRandPoems(int n) {
-        return Optional.empty();
+        List<Poem> poems = poemRepository.findAll();
+        if(poems.size() < n){
+            return poems.isEmpty() ? Optional.empty() : Optional.of(poems);
+        }
+        // shuffle poems
+        for(int i = 0; i < poems.size(); i++){
+            int randIndex = (int) (Math.random() * poems.size());
+            Poem temp = poems.get(i);
+            poems.set(i, poems.get(randIndex));
+            poems.set(randIndex, temp);
+        }
+        return Optional.of(poems.subList(0, n));
     }
 }
