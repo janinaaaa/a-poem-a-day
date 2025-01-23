@@ -1,5 +1,8 @@
 package a_poem_a_day.service.poem;
 
+import a_poem_a_day.dto.poem.AddPoemRequest;
+import a_poem_a_day.dto.poem.UpdatePoemRequest;
+import a_poem_a_day.mapper.PoemMapper;
 import a_poem_a_day.model.Poem;
 import a_poem_a_day.repository.PoemRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PoemServiceImpl implements PoemService{
     private final PoemRepository poemRepository;
+    private final PoemMapper poemMapper;
 
     @Override
     public Optional<Poem> getPoemById(String id) {
@@ -42,5 +46,22 @@ public class PoemServiceImpl implements PoemService{
             poems.set(randIndex, temp);
         }
         return Optional.of(poems.subList(0, n));
+    }
+
+    @Override
+    public Poem addPoem(AddPoemRequest poem) {
+        Poem newPoem = poemMapper.toPoem(poem);
+        return poemRepository.save(newPoem);
+    }
+
+    @Override
+    public Poem updatePoem(UpdatePoemRequest poem) {
+        Poem newPoem = poemMapper.toPoem(poem);
+        return poemRepository.save(newPoem);
+    }
+
+    @Override
+    public void deletePoem(String id) {
+        poemRepository.deleteById(id);
     }
 }
