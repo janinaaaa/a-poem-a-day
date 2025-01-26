@@ -1,6 +1,7 @@
 package a_poem_a_day.service.theme;
 
 import a_poem_a_day.dto.theme.AddThemeRequest;
+import a_poem_a_day.dto.theme.ThemeDTO;
 import a_poem_a_day.dto.theme.UpdateThemeRequest;
 import a_poem_a_day.model.Theme;
 import a_poem_a_day.repository.ThemeRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,23 +20,33 @@ public class ThemeServiceImpl implements ThemeService{
     private final ThemeMapper themeMapper;
 
     @Override
-    public Optional<Theme> getThemeById(String id) {
-        return themeRepository.findById(id);
+    public ThemeDTO getThemeById(String id) {
+        ThemeDTO themeDTO = themeMapper.toThemeDTO(themeRepository.findById(id).get());
+        return themeDTO;
     }
 
     @Override
-    public Optional<List<Theme>> getThemesByDate(Date date) {
-        return themeRepository.findByThemeDate(date);
+    public List<ThemeDTO> getThemesByDate(Date date) {
+        List<Theme> themes = themeRepository.findAll();
+        return themes.stream()
+                .map(themeMapper::toThemeDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<List<Theme>> getThemesByDateRange(Date startDate, Date endDate) {
-        return themeRepository.findByThemeDateBetween(startDate, endDate);
+    public List<ThemeDTO> getThemesByDateRange(Date startDate, Date endDate) {
+        List<Theme> themes = themeRepository.findByThemeDateBetween(startDate, endDate).get();
+        return themes.stream()
+                .map(themeMapper::toThemeDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<List<Theme>> getThemesByMonth(int month) {
-        return themeRepository.findByThemeDateMonth(month);
+    public List<ThemeDTO> getThemesByMonth(int month) {
+        List<Theme> themes = themeRepository.findByThemeDateMonth(month).get();
+        return themes.stream()
+                .map(themeMapper::toThemeDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
