@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,13 +22,13 @@ public class ThemeServiceImpl implements ThemeService{
 
     @Override
     public ThemeDTO getThemeById(String id) {
-        ThemeDTO themeDTO = themeMapper.toThemeDTO(themeRepository.findById(id).get());
-        return themeDTO;
+        Optional<Theme> theme = themeRepository.findById(id);
+        return theme.map(themeMapper::toThemeDTO).orElse(null);
     }
 
     @Override
     public List<ThemeDTO> getThemesByDate(Date date) {
-        List<Theme> themes = themeRepository.findAll();
+        List<Theme> themes = themeRepository.findByThemeDate(date);
         return themes.stream()
                 .map(themeMapper::toThemeDTO)
                 .collect(Collectors.toList());
@@ -35,7 +36,7 @@ public class ThemeServiceImpl implements ThemeService{
 
     @Override
     public List<ThemeDTO> getThemesByDateRange(Date startDate, Date endDate) {
-        List<Theme> themes = themeRepository.findByThemeDateBetween(startDate, endDate).get();
+        List<Theme> themes = themeRepository.findByThemeDateBetween(startDate, endDate);
         return themes.stream()
                 .map(themeMapper::toThemeDTO)
                 .collect(Collectors.toList());
@@ -43,7 +44,7 @@ public class ThemeServiceImpl implements ThemeService{
 
     @Override
     public List<ThemeDTO> getThemesByMonth(int month) {
-        List<Theme> themes = themeRepository.findByThemeDateMonth(month).get();
+        List<Theme> themes = themeRepository.findByThemeDateMonth(month);
         return themes.stream()
                 .map(themeMapper::toThemeDTO)
                 .collect(Collectors.toList());

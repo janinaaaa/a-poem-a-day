@@ -5,13 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface ThemeRepository extends JpaRepository<Theme, String> {
 
-    Optional<List<Theme>> findByThemeDate(Date date);
+    List<Theme> findByThemeDate(Date date);
 
-    Optional<List<Theme>> findByThemeDateBetween(Date startDate, Date endDate);
+    List<Theme> findByThemeDateBetween(Date startDate, Date endDate);
 
-    Optional<List<Theme>> findByThemeDateMonth(int month);
+    List<Theme> findByThemeDateMonth(int month);
 }

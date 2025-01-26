@@ -10,6 +10,6 @@ public interface PoemRepository extends JpaRepository<Poem, String> {
 
     Optional<Poem> findByTitle(String title);
 
-    Optional<List<Poem>> findByAuthor(String author);
+    List<Poem> findByAuthor(String author);
 }
 
