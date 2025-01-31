@@ -1,5 +1,6 @@
 package a_poem_a_day.controller;
 
+import a_poem_a_day.dto.poem.PoemDTO;
 import a_poem_a_day.model.Poem;
 import a_poem_a_day.service.poem.PoemService;
 import lombok.RequiredArgsConstructor;
@@ -15,31 +16,23 @@ import java.util.List;
 public class PoemController {
     private final PoemService poemService;
     @GetMapping("/{id}")
-    public ResponseEntity<Poem> getPoemById(@PathVariable String id) {
-        return poemService.getPoemById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<PoemDTO> getPoemById(@PathVariable String id) {
+        return ResponseEntity.ok(poemService.getPoemById(id));
     }
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<Poem> getPoemByTitle(@PathVariable String title) {
-        return poemService.getPoemByTitle(title)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<PoemDTO> getPoemByTitle(@PathVariable String title) {
+        return ResponseEntity.ok(poemService.getPoemByTitle(title));
     }
 
     @GetMapping
-    public ResponseEntity<List<Poem>> getRandPoems(int n) {
-        return poemService.getRandPoems(n)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<PoemDTO>> getRandPoems(int n) {
+        return ResponseEntity.ok(poemService.getRandPoems(n));
     }
 
     @GetMapping("/author/{author}")
-    public ResponseEntity<List<Poem>> getPoemByAuthor(@PathVariable String author) {
-        return poemService.getPoemByAuthor(author)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<PoemDTO>> getPoemByAuthor(@PathVariable String author) {
+        return ResponseEntity.ok(poemService.getPoemByAuthor(author));
     }
 
 
