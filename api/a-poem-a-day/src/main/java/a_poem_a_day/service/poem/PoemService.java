@@ -12,7 +12,7 @@ public interface PoemService {
     PoemDTO getPoemById(String id);
     PoemDTO getPoemByTitle(String title);
     List<PoemDTO> getPoemByAuthor(String author);
-    List<Poem> getRandPoems(int n);
+    List<PoemDTO> getRandPoems(int n);
     Poem addPoem(AddPoemRequest poem);
     Poem updatePoem(UpdatePoemRequest poem);
     void deletePoem(String id);

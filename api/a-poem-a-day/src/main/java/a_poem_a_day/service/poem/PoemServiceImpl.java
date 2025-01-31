@@ -41,11 +41,13 @@ public class PoemServiceImpl implements PoemService{
     }
 
     @Override
-    public List<Poem> getRandPoems(int n) {
+    public List<PoemDTO> getRandPoems(int n) {
         List<Poem> poems = poemRepository.findAll();
         // If there are less than n poems, return all poems
         if(poems.size() < n){
-            return poems;
+            return poems.stream()
+                    .map(poemMapper::toPoemDTO)
+                    .collect(Collectors.toList());
         }
         // shuffle poems
         for(int i = 0; i < poems.size(); i++){
@@ -54,7 +56,9 @@ public class PoemServiceImpl implements PoemService{
             poems.set(i, poems.get(randIndex));
             poems.set(randIndex, temp);
         }
-        return poems.subList(0, n);
+        return poems.subList(0, n).stream()
+                .map(poemMapper::toPoemDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
